@@ -141,7 +141,7 @@ class Bomb:
         screen.blit(self.img, self.rct)
 class Score:
     """
-    スコアに関するクラス
+    スコア表示に関するクラス
     """
     def __init__(self):
         self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)  # 
@@ -162,6 +162,7 @@ def main():
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((300, 200))
     score=Score()
+    beams=[]
     # bomb = Bomb((255, 0, 0), 10)
     # bombs = []  # 爆弾用の空のリスト
     # for _ in range(NUM_OF_BOMBS):
@@ -176,7 +177,8 @@ def main():
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 # スペースキー押下でBeamクラスのインスタンス生成
-                beam = Beam(bird)            
+                a=Beam(bird)
+                beams.append(a)            
         screen.blit(bg_img, [0, 0])
         
         for bomb in bombs:
@@ -193,17 +195,18 @@ def main():
         
         for i, bomb in enumerate(bombs):
             if beam is not None:
-                if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突していたら
-                    beam = None
-                    bombs[i] = None
-                    bird.change_img(6, screen)
-                    score.score+=1
+                for beam in beams:
+                    if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突していたら
+                        beam = None
+                        bombs[i] = None
+                        bird.change_img(6, screen)
+                        score.score+=1
         bombs = [bomb for bomb in bombs if bomb is not None]
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
-        if beam is not None:  # ビームが存在するときだけ
-           beam.update(screen) 
+        for beam in beams:
+                beam.update(screen) # ビームが存在するときのみ
         for bomb in bombs:
            bomb.update(screen)
         score.update(screen)
