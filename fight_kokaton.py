@@ -144,7 +144,7 @@ class Score:
     スコア表示に関するクラス
     """
     def __init__(self):
-        self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)  # 
+        self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30) 
         self.color = (0, 0, 255)  
         self.score = 0 
         self.img = self.fonto.render(f"スコア: {self.score}", 0, self.color)
@@ -165,10 +165,10 @@ class Explosion:
         self.img = self.imgs[0]
         self.rct = self.img.get_rect()
         self.rct.center = bomb_rct.center
-        self.life = 30 
+        self.life = 10 #エフェクト時間
 
     def update(self, screen: pg.Surface):
-        self.life -= 1 
+        self.life =self.life-1 
         if self.life > 0:
             self.img = self.imgs[self.life % 2]
             screen.blit(self.img, self.rct)
@@ -227,7 +227,7 @@ def main():
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
         for beam in beams:
-                beam.update(screen) # ビームが存在するときのみ
+                beam.update(screen) # ビームが存在するときだけ
         for bomb in bombs:
            bomb.update(screen)
         for exp in explosions: 
