@@ -10,7 +10,6 @@ HEIGHT = 650  # ゲームウィンドウの高さ
 NUM_OF_BOMBS = 5# 爆弾の数
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-
 def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
     """
     オブジェクトが画面内or画面外を判定し，真理値タプルを返す関数
@@ -139,6 +138,8 @@ class Bomb:
             self.vy *= -1
         self.rct.move_ip(self.vx, self.vy)
         screen.blit(self.img, self.rct)
+
+
 class Score:
     """
     スコア表示に関するクラス
@@ -154,6 +155,7 @@ class Score:
     def update(self, screen: pg.Surface):
         self.img = self.fonto.render(f"スコア: {self.score}", 0, self.color)
         screen.blit(self.img, self.rct)
+
 
 class Explosion:
     """
@@ -172,6 +174,7 @@ class Explosion:
         if self.life > 0:
             self.img = self.imgs[self.life % 2]
             screen.blit(self.img, self.rct)
+
 
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
@@ -222,8 +225,6 @@ def main():
                         explosions.append(Explosion(bomb.rct))
         bombs = [bomb for bomb in bombs if bomb is not None]
         explosions = [exp for exp in explosions if exp.life > 0]
-
-
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
         for beam in beams:
