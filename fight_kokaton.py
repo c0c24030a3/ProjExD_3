@@ -7,8 +7,9 @@ import pygame as pg
 
 WIDTH = 1100  # ゲームウィンドウの幅
 HEIGHT = 650  # ゲームウィンドウの高さ
-NUM_OF_BOMBS = 5# 爆弾の数
+NUM_OF_BOMBS = 20# 爆弾の数
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 
 def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
     """
@@ -97,7 +98,7 @@ class Beam:
         self.rct = self.img.get_rect()
         self.rct.centery = bird.rct.centery
         self.rct.left = bird.rct.right  # ビームの左座標＝こうかとんの右座標
-        self.vx, self.vy = +5, 0
+        self.vx, self.vy = +20, 0
 
     def update(self, screen: pg.Surface):
         """
